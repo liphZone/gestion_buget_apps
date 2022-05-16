@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "256456187305",
+    "project_id": "gestion-budget-apps",
+    "storage_bucket": "gestion-budget-apps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256456187305:android:07a875c8fad6edc0edf8b8",
+        "android_client_info": {
+          "package_name": "com.example.gestion_buget_apps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256456187305-6g6jtl1adl2iq8vks45hh91j5bcv4qv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3BbcWpAiLN7fcyIYRi9fflrrdfA-jXoU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "256456187305-6g6jtl1adl2iq8vks45hh91j5bcv4qv5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
