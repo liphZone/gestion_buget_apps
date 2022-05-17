@@ -23,7 +23,7 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.2,
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: Colors.deepPurple,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(

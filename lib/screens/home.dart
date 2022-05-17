@@ -9,12 +9,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-    int selectIndex = 0;
+  int selectIndex = 0;
 
   List<Widget> screens = [
     AcceuilScreen(),
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
           selectedItemColor: Colors.red,
           unselectedItemColor: Colors.black,
           items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home_filled), label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.analytics), label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.list), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.analytics), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.list), label: ''),
           ],
           onTap: (val) {
             setState(() {
@@ -53,9 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-
-      floatingActionButton: FloatingActionButton(onPressed: (){},child: Icon(Icons.add),),
-      
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, 'compte_form');
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }

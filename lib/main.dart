@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gestion_buget_apps/screens/acceuil.dart';
+import 'package:gestion_buget_apps/screens/comptes/compte_form.dart';
 import 'package:gestion_buget_apps/screens/home.dart';
 
 Future<void> main() async {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Gestion Budget',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'home': (context) => const HomeScreen(),
         'accueil': (context) => const AcceuilScreen(),
+        'compte_form': (context) => const CompteFormeScreen(),
       },
     );
   }
