@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gestion_buget_apps/models/compte.dart';
+import 'package:intl/intl.dart';
+
+import '../home.dart';
 
 class CompteFormeScreen extends StatefulWidget {
   const CompteFormeScreen({Key? key}) : super(key: key);
@@ -18,40 +21,75 @@ class _CompteFormeScreenState extends State<CompteFormeScreen> {
   TextEditingController montantDeplacementController = TextEditingController();
   TextEditingController montantEducationController = TextEditingController();
   TextEditingController montantDiversController = TextEditingController();
-  bool? logement = false;
-  bool? alimentation = false;
-  bool? habillement = false;
-  bool? deplacement = false;
-  bool? education = false;
-  bool? divers = false;
 
   int index = -1;
+  String mois1 = 'Janvier';
+  final List mois = [
+    "Janvier",
+    "Février",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Aout",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+  ];
 
   Future addCompte() async {
-    final docCompte = FirebaseFirestore.instance.collection('comptes').doc();
+    try {
+      final docCompte = FirebaseFirestore.instance.collection('comptes').doc('Compte-${DateFormat("dd-MM-yyyy").format(DateTime.now())}');
 
-    final add_compte = Compte(
-      jour: DateTime.now().day,
-      mois: DateTime.now().month,
-      solde: int.parse(soldeController.text),
-      logement: logement,
-      montant_logement: int.parse(montantLogementController.text),
-      alimentation: alimentation,
-      montant_alimentation: int.parse(montantAlimentationController.text),
-      habillement: habillement,
-      montant_habillement: int.parse(montantHabillementController.text),
-      deplacement: deplacement,
-      montant_deplacement: int.parse(montantDeplacementController.text),
-      education: education,
-      montant_education: int.parse(montantHabillementController.text),
-      divers: divers,
-      montant_divers: int.parse(montantDiversController.text),
-      date: DateTime.now(),
-    );
-    final json = add_compte.compteToJson();
+      final add_compte = Compte(
+        jour: DateTime.now().day,
+        mois: DateFormat.LLLL().format(DateTime.now()),
+        solde: int.parse(soldeController.text),
+        // logement: logement,
+        montant_logement: int.parse(montantLogementController.text),
+        // alimentation: alimentation,
+        montant_alimentation: int.parse(montantAlimentationController.text),
+        // habillement: habillement,
+        montant_habillement: int.parse(montantHabillementController.text),
+        // deplacement: deplacement,
+        montant_deplacement: int.parse(montantDeplacementController.text),
+        // education: education,
+        montant_education: int.parse(montantEducationController.text),
+        // divers: divers,
+        montant_divers: int.parse(montantDiversController.text),
+        date_complete: DateTime.now(),
+        date: DateFormat("dd MM yyyy").format(DateTime.now()),
+      );
 
-    //creation du document et ecriture des datas
-    await docCompte.set(json);
+      final json = add_compte.createCompteToJson();
+
+      print('Solde : ${soldeController.text}');
+      print('Logement : ${montantLogementController.text}');
+      print('Food : ${montantAlimentationController.text}');
+      // print('Habillemt : $montantHabillementController.text');
+      // print('Deplacement : $montantDeplacementController.text');
+      // print('Education : $montantEducationController.text');
+      // print('Divers : $montantDiversController.text');
+
+      // //creation du document et ecriture des datas
+      await docCompte.set(json);
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Vous avez enregistré une dépense journalière ')));
+
+      soldeController.clear();
+      montantLogementController.clear();
+      montantAlimentationController.clear();
+      montantHabillementController.clear();
+      montantDeplacementController.clear();
+      montantEducationController.clear();
+      montantDiversController.clear();
+    } on FirebaseException catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Erreur $e')));
+    }
   }
 
   @override
@@ -80,6 +118,8 @@ class _CompteFormeScreenState extends State<CompteFormeScreen> {
                         hintText: 'Solde',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
+                    validator: (val) =>
+                        val!.isEmpty ? 'Veuillez saisir un solde' : null,
                   ),
                 ),
                 SizedBox(
@@ -112,56 +152,40 @@ class _CompteFormeScreenState extends State<CompteFormeScreen> {
                           canTapOnHeader: true,
                           body: Column(
                             children: [
-                              ListTile(
-                                title: Text('Logement'),
-                                leading: Checkbox(
-                                    value: logement,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        logement = value;
-                                      });
-                                    }),
-                              ),
-                              logement == true
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        controller: montantLogementController,
-                                        decoration: InputDecoration(
-                                            hintText: 'Montant logement',
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15))),
-                                      ),
-                                    )
-                                  : SizedBox(),
-                              ListTile(
-                                title: Text('Nourriture'),
-                                leading: Checkbox(
-                                    value: alimentation,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        alimentation = value;
-                                      });
-                                    }),
+                              Text('Logement'),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  controller: montantLogementController,
+                                  decoration: InputDecoration(
+                                      hintText: 'Montant logement',
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15))),
+                                  validator: (val) => val!.isEmpty
+                                      ? 'Veuillez saisir le montant logement'
+                                      : null,
+                                ),
                               ),
                               SizedBox(),
-                              alimentation == true
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        controller:
-                                            montantAlimentationController,
-                                        decoration: InputDecoration(
-                                            hintText: 'Montant',
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15))),
-                                      ),
-                                    )
-                                  : SizedBox(),
+                              Text('Nourriture'),
+                              SizedBox(),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  controller: montantAlimentationController,
+                                  decoration: InputDecoration(
+                                      hintText: 'Saisir montant nourriture',
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15))),
+                                  validator: (val) => val!.isEmpty
+                                      ? 'Veuillez saisir le montant nourriture'
+                                      : null,
+                                ),
+                              )
                             ],
                           ),
                           isExpanded: index == 0,
@@ -177,58 +201,41 @@ class _CompteFormeScreenState extends State<CompteFormeScreen> {
                           canTapOnHeader: true,
                           body: Column(
                             children: [
-                              ListTile(
-                                title: Text('Habillement'),
-                                leading: Checkbox(
-                                    value: habillement,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        habillement = value;
-                                      });
-                                    }),
+                              Text('Habillement'),
+                              SizedBox(),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  controller: montantHabillementController,
+                                  decoration: InputDecoration(
+                                      hintText: 'Montant habillement',
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15))),
+                                  validator: (val) => val!.isEmpty
+                                      ? 'Veuillez saisir le montant habillement'
+                                      : null,
+                                ),
                               ),
                               SizedBox(),
-                              habillement == true
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        controller:
-                                            montantHabillementController,
-                                        decoration: InputDecoration(
-                                            hintText: 'Montant habillement',
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15))),
-                                      ),
-                                    )
-                                  : SizedBox(),
-                              ListTile(
-                                title: Text('Déplacement'),
-                                leading: Checkbox(
-                                    value: deplacement,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        deplacement = value;
-                                      });
-                                    }),
-                              ),
+                              Text('Dépalcement'),
                               SizedBox(),
-                              deplacement == true
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        controller:
-                                            montantDeplacementController,
-                                        decoration: InputDecoration(
-                                            hintText: 'Montant deplacement',
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15))),
-                                      ),
-                                    )
-                                  : SizedBox(),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  controller: montantDeplacementController,
+                                  decoration: InputDecoration(
+                                      hintText: 'Montant déplacement',
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15))),
+                                  validator: (val) => val!.isEmpty
+                                      ? 'Veuillez saisir le montant déplacement'
+                                      : null,
+                                ),
+                              ),
                             ],
                           ),
                           isExpanded: index == 1,
@@ -244,57 +251,38 @@ class _CompteFormeScreenState extends State<CompteFormeScreen> {
                           canTapOnHeader: true,
                           body: Column(
                             children: [
-                              ListTile(
-                                title: Text('Education'),
-                                leading: Checkbox(
-                                    value: education,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        education = value;
-                                      });
-                                    }),
-                              ),
+                              Text('Education'),
                               SizedBox(),
-                              education == true
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        controller: montantEducationController,
-                                        decoration: InputDecoration(
-                                            hintText: 'Montant Education',
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15))),
-                                      ),
-                                    )
-                                  : SizedBox(),
-                              ListTile(
-                                title: Text('Divers'),
-                                leading: Checkbox(
-                                    value: divers,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        divers = value;
-                                      });
-                                    }),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: TextFormField(
+                                    keyboardType: TextInputType.number,
+                                    controller: montantEducationController,
+                                    decoration: InputDecoration(
+                                        hintText: 'Montant Education',
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15))),
+                                    validator: (val) => val!.isEmpty
+                                        ? 'Veuillez saisir le montant éducation'
+                                        : null),
                               ),
-                              divers == true
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        controller: montantDiversController,
-                                        decoration: InputDecoration(
-                                            hintText: 'Montant divers',
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15))),
-                                      ),
-                                    )
-                                  : SizedBox(
-                                      height: 10,
-                                    ),
+                              Text('Divers'),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  controller: montantDiversController,
+                                  decoration: InputDecoration(
+                                      hintText: 'Montant divers',
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15))),
+                                  validator: (val) => val!.isEmpty
+                                      ? 'Veuillez saisir le montant divers'
+                                      : null,
+                                ),
+                              ),
                             ],
                           ),
                           isExpanded: index == 2,
@@ -303,18 +291,28 @@ class _CompteFormeScreenState extends State<CompteFormeScreen> {
                     ),
                   ),
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      addCompte();
-                    },
-                    child: Text('Enregistrer')),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      'Retour',
-                    ))
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          if (compteFormKey.currentState!.validate()) {
+                            addCompte();
+                          }
+                        },
+                        child: Text('Enregistrer')),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()),
+                              (route) => false);
+                        },
+                        child: Text(
+                          'Retour',
+                        )),
+                  ],
+                )
               ],
             ),
           ),

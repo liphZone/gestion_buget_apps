@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:gestion_buget_apps/screens/acceuil.dart';
 import 'package:gestion_buget_apps/screens/comptes/compte_form.dart';
 import 'package:gestion_buget_apps/screens/home.dart';
+import 'package:gestion_buget_apps/screens/statistique.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         'home': (context) => const HomeScreen(),
         'accueil': (context) => const AcceuilScreen(),
         'compte_form': (context) => const CompteFormeScreen(),
+        'stat_screen': (context) => const StatistiqueScreen(),
       },
     );
   }
