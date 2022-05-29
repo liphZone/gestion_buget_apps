@@ -34,6 +34,7 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
   double total_food_global = 0;
   double total_logement_global = 0;
 
+  //Je recupere les depenses individuellement suivant le mois
   Future readCompte() async {
     try {
       await FirebaseFirestore.instance
@@ -110,11 +111,8 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
           montant_logement_today = total_logement;
         });
 
-      
-
         print('Food : $montant_food_today');
         print('Logement : $montant_logement_today');
- 
       });
     } on FirebaseException catch (e) {
       print(e);
@@ -123,22 +121,10 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
     }
   }
 
-  Future updateCompte() async{
-  await FirebaseFirestore.instance
-          .collection('comptes')
-          .where('date', isEqualTo: "Compte-${DateFormat("dd-MM-yyyy").format(DateTime.now())}")
-          .get()
-          .then((snapshot) {
-           print('Snap : $snapshot');
-          });
-  }
-
-  
   @override
   void initState() {
     readCompte();
     todayMontant();
-    updateCompte();
 
     super.initState();
   }
@@ -303,7 +289,7 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.1,
-                          child: Center(child: Text("Aujourd'hui")),
+                          child: Center(child: Text("Aujourd'hui ${DateTime.now().day} ${ DateFormat.LLLL().format(DateTime.now())}")),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width,
@@ -343,7 +329,7 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    //Vers informations depenses mois
+                    Navigator.pushNamed(context, 'month_depense');
                   },
                   child: Container(
                     margin:

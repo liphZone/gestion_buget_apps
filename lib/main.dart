@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gestion_buget_apps/screens/acceuil.dart';
+import 'package:gestion_buget_apps/screens/budgets/mois.dart';
+import 'package:gestion_buget_apps/screens/budgets/today.dart';
 import 'package:gestion_buget_apps/screens/comptes/compte_form.dart';
+import 'package:gestion_buget_apps/screens/comptes/update_compte_form.dart';
 import 'package:gestion_buget_apps/screens/home.dart';
 import 'package:gestion_buget_apps/screens/statistique.dart';
 
@@ -36,10 +39,13 @@ class MyApp extends StatelessWidget {
       home: HomeScreen(),
       initialRoute: 'home',
       routes: {
-        'home': (context) => const HomeScreen(),
-        'accueil': (context) => const AcceuilScreen(),
-        'compte_form': (context) => const CompteFormeScreen(),
-        'stat_screen': (context) => const StatistiqueScreen(),
+        'home'          : (context) => const HomeScreen(),
+        'accueil'       : (context) => const AcceuilScreen(),
+        'compte_form'   : (context) => const CompteFormScreen(),
+        'compte_update' : (context) => const CompteUpdateScreen(),
+        'today_depense' : (context) => const TodayOutlayScreen(),
+        'month_depense' : (context) => const MonthOutlayScreen(),
+        'stat_screen'   : (context) => const StatistiqueScreen(),
       },
     );
   }

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gestion_buget_apps/screens/acceuil.dart';
 import 'package:gestion_buget_apps/screens/statistique.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,35 +16,38 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> screens = [AcceuilScreen(), StatistiqueScreen()];
 
+  var data_global;
+
+  Future updateCompte() async {
+    DocumentSnapshot documentSnapshot;
+    try {
+      documentSnapshot = await FirebaseFirestore.instance
+          .collection('comptes')
+          .doc('Compte-${DateFormat("dd-MM-yyyy").format(DateTime.now())}')
+          .get();
+
+      setState(() {
+        data_global = documentSnapshot.exists;
+      });
+
+      print('Data : $documentSnapshot');
+      print('Val : ${documentSnapshot.exists}');
+    } on FirebaseException catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Erreur $e')));
+    }
+  }
+
+  @override
+  void initState() {
+    updateCompte();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //     children: [
-      //       DropdownButton(
-      //         value: mois1,
-      //         items: mois.map((String item) {
-      //           return DropdownMenuItem(
-      //             value: item,
-      //             child: Text(item),
-      //           );
-      //         }).toList(),
-      //         onChanged: (String? newValue) {
-      //           setState(() {
-      //             mois1 = newValue!;
-      //             readCompte();
-
-      //             print('Val: ${mois1}');
-      //           });
-      //         },
-      //       ),
-      //       Text('Gestion Budget'),
-      //       IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
-      //     ],
-      //   ),
-      // ),
       body: screens.elementAt(selectIndex),
       bottomNavigationBar: BottomAppBar(
         notchMargin: 5,
@@ -68,9 +72,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, 'compte_form');
+          data_global == false
+              ? Navigator.pushNamed(context, 'compte_form')
+              : Navigator.pushNamed(context, 'compte_update');
         },
-        child: Icon(Icons.add),
+        child: data_global == false ? Icon(Icons.add) : Icon(Icons.edit),
       ),
     );
   }

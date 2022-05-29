@@ -1,22 +1,22 @@
 class Compte {
   int? jour;
   String? mois;
-  int? solde;
+  double? solde;
   // String? besoin_primaire;
   // bool? logement;
-  int? montant_logement;
+  double? montant_logement;
   // bool? alimentation;
-  int? montant_alimentation;
+  double? montant_alimentation;
   // String? besoin_secondaire;
   // bool? habillement;
-  int? montant_habillement;
+  double? montant_habillement;
   // bool? deplacement;
-  int? montant_deplacement;
+  double? montant_deplacement;
   // String? autre_besoin;
   // bool? education;
-  int? montant_education;
+  double? montant_education;
   // bool? divers;
-  int? montant_divers;
+  double? montant_divers;
   DateTime? date_complete;
   String? date;
 

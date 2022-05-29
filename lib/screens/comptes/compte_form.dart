@@ -5,14 +5,14 @@ import 'package:intl/intl.dart';
 
 import '../home.dart';
 
-class CompteFormeScreen extends StatefulWidget {
-  const CompteFormeScreen({Key? key}) : super(key: key);
+class CompteFormScreen extends StatefulWidget {
+  const CompteFormScreen({Key? key}) : super(key: key);
 
   @override
-  State<CompteFormeScreen> createState() => _CompteFormeScreenState();
+  State<CompteFormScreen> createState() => _CompteFormScreenState();
 }
 
-class _CompteFormeScreenState extends State<CompteFormeScreen> {
+class _CompteFormScreenState extends State<CompteFormScreen> {
   GlobalKey<FormState> compteFormKey = GlobalKey();
   TextEditingController soldeController = TextEditingController();
   TextEditingController montantLogementController = TextEditingController();
@@ -23,41 +23,29 @@ class _CompteFormeScreenState extends State<CompteFormeScreen> {
   TextEditingController montantDiversController = TextEditingController();
 
   int index = -1;
-  String mois1 = 'Janvier';
-  final List mois = [
-    "Janvier",
-    "Février",
-    "Mars",
-    "Avril",
-    "Mai",
-    "Juin",
-    "Juillet",
-    "Aout",
-    "Septembre",
-    "Octobre",
-    "Novembre",
-  ];
 
   Future addCompte() async {
     try {
-      final docCompte = FirebaseFirestore.instance.collection('comptes').doc('Compte-${DateFormat("dd-MM-yyyy").format(DateTime.now())}');
+      final docCompte = FirebaseFirestore.instance
+          .collection('comptes')
+          .doc('Compte-${DateFormat("dd-MM-yyyy").format(DateTime.now())}');
 
       final add_compte = Compte(
         jour: DateTime.now().day,
         mois: DateFormat.LLLL().format(DateTime.now()),
-        solde: int.parse(soldeController.text),
+        solde: double.parse(soldeController.text),
         // logement: logement,
-        montant_logement: int.parse(montantLogementController.text),
+        montant_logement: double.parse(montantLogementController.text),
         // alimentation: alimentation,
-        montant_alimentation: int.parse(montantAlimentationController.text),
+        montant_alimentation: double.parse(montantAlimentationController.text),
         // habillement: habillement,
-        montant_habillement: int.parse(montantHabillementController.text),
+        montant_habillement: double.parse(montantHabillementController.text),
         // deplacement: deplacement,
-        montant_deplacement: int.parse(montantDeplacementController.text),
+        montant_deplacement: double.parse(montantDeplacementController.text),
         // education: education,
-        montant_education: int.parse(montantEducationController.text),
+        montant_education: double.parse(montantEducationController.text),
         // divers: divers,
-        montant_divers: int.parse(montantDiversController.text),
+        montant_divers: double.parse(montantDiversController.text),
         date_complete: DateTime.now(),
         date: DateFormat("dd MM yyyy").format(DateTime.now()),
       );
@@ -67,13 +55,15 @@ class _CompteFormeScreenState extends State<CompteFormeScreen> {
       print('Solde : ${soldeController.text}');
       print('Logement : ${montantLogementController.text}');
       print('Food : ${montantAlimentationController.text}');
-      // print('Habillemt : $montantHabillementController.text');
-      // print('Deplacement : $montantDeplacementController.text');
-      // print('Education : $montantEducationController.text');
-      // print('Divers : $montantDiversController.text');
+
 
       // //creation du document et ecriture des datas
       await docCompte.set(json);
+
+        Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()),
+                              (route) => false);
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Vous avez enregistré une dépense journalière ')));
@@ -90,6 +80,36 @@ class _CompteFormeScreenState extends State<CompteFormeScreen> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Erreur $e')));
     }
+  }
+
+  var data_global;
+
+  // Verification de l'exisitance de l'id dans la base de données
+  Future compteIdCheck() async {
+    DocumentSnapshot documentSnapshot;
+    try {
+      documentSnapshot = await FirebaseFirestore.instance
+          .collection('comptes')
+          .doc('Compte-${DateFormat("dd-MM-yyyy").format(DateTime.now())}')
+          .get();
+
+      setState(() {
+        data_global = documentSnapshot.exists;
+      });
+
+      print('Data : $documentSnapshot');
+      print('Val : ${documentSnapshot.exists}');
+    } on FirebaseException catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Erreur $e')));
+    }
+  }
+
+  @override
+  void initState() {
+    compteIdCheck();
+    super.initState();
   }
 
   @override
