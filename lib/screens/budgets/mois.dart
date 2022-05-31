@@ -82,17 +82,27 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
           total_deplacement_global = total_deplacement;
           total_education_global = total_education;
           total_divers_global = total_divers;
-          percent_logement_global =
-              total_logement_global * 100 / total_solde_global;
-          percent_food_global = total_food_global * 100 / total_solde_global;
-          percent_clothing_global =
-              total_clothing_global * 100 / total_solde_global;
-          percent_deplacement_global =
-              total_deplacement_global * 100 / total_solde_global;
-          percent_education_global =
-              total_education_global * 100 / total_solde_global;
-          percent_divers_global =
-              total_divers_global * 100 / total_solde_global;
+
+          if (total_solde_global != 0) {
+            percent_logement_global =
+                total_logement_global * 100 / total_solde_global;
+            percent_food_global = total_food_global * 100 / total_solde_global;
+            percent_clothing_global =
+                total_clothing_global * 100 / total_solde_global;
+            percent_deplacement_global =
+                total_deplacement_global * 100 / total_solde_global;
+            percent_education_global =
+                total_education_global * 100 / total_solde_global;
+            percent_divers_global =
+                total_divers_global * 100 / total_solde_global;
+          } else {
+            percent_logement_global = 0;
+            percent_food_global = 0;
+            percent_clothing_global = 0;
+            percent_deplacement_global = 0;
+            percent_education_global = 0;
+            percent_divers_global = 0;
+          }
         });
       });
     } on FirebaseException catch (e) {
@@ -142,10 +152,10 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              
                 children: [
                   Container(
-                    margin: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(10),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
@@ -168,7 +178,7 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(10),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
@@ -191,7 +201,7 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(10),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
@@ -213,8 +223,8 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                       trailing: Text('$total_clothing_global F CFA'),
                     ),
                   ),
-                      Container(
-                    margin: EdgeInsets.all(5),
+                  Container(
+                    margin: EdgeInsets.all(10),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
@@ -236,9 +246,8 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                       trailing: Text('$total_deplacement_global F CFA'),
                     ),
                   ),
-
-                   Container(
-                    margin: EdgeInsets.all(5),
+                  Container(
+                    margin: EdgeInsets.all(10),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
@@ -260,8 +269,8 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                       trailing: Text('$total_education_global F CFA'),
                     ),
                   ),
-                   Container(
-                    margin: EdgeInsets.all(5),
+                  Container(
+                    margin: EdgeInsets.all(10),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
@@ -283,8 +292,6 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                       trailing: Text('$total_divers_global F CFA'),
                     ),
                   ),
-
-              
                 ],
               )),
         )));

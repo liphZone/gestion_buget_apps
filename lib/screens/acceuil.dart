@@ -88,7 +88,7 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
     try {
       await FirebaseFirestore.instance
           .collection('comptes')
-          .where('jour', isEqualTo: DateTime.now().day)
+          .where('date', isEqualTo: DateFormat("dd MM yyyy").format(DateTime.now()))
           .get()
           .then((snapshot) {
         double total_logement = 0.0;
@@ -120,13 +120,25 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
           .showSnackBar(SnackBar(content: Text('Erreur $e')));
     }
   }
-
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
   @override
   void initState() {
     readCompte();
     todayMontant();
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+   readCompte();
+    todayMontant();
+    super.dispose();
   }
 
   @override
@@ -273,7 +285,7 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    //Vers page depenses today
+                    Navigator.pushNamed(context, 'today_depense');
                   },
                   child: Container(
                     margin:
@@ -289,7 +301,9 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.1,
-                          child: Center(child: Text("Aujourd'hui ${DateTime.now().day} ${ DateFormat.LLLL().format(DateTime.now())}")),
+                          child: Center(
+                              child: Text(
+                                  "Aujourd'hui ${DateTime.now().day} ${DateFormat.LLLL().format(DateTime.now())}")),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width,

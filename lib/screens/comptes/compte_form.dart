@@ -76,7 +76,6 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
       montantEducationController.clear();
       montantDiversController.clear();
     } on FirebaseException catch (e) {
-      print(e);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Erreur $e')));
     }

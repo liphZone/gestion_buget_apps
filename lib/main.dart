@@ -8,6 +8,7 @@ import 'package:gestion_buget_apps/screens/comptes/compte_form.dart';
 import 'package:gestion_buget_apps/screens/comptes/update_compte_form.dart';
 import 'package:gestion_buget_apps/screens/home.dart';
 import 'package:gestion_buget_apps/screens/statistique.dart';
+import 'package:gestion_buget_apps/screens/stats/chart.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         'compte_update' : (context) => const CompteUpdateScreen(),
         'today_depense' : (context) => const TodayOutlayScreen(),
         'month_depense' : (context) => const MonthOutlayScreen(),
-        'stat_screen'   : (context) => const StatistiqueScreen(),
+        'stat_screen'   : (context) =>  ChartScreen(),
       },
     );
   }
