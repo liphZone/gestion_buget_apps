@@ -77,7 +77,6 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
         });
       });
     } on FirebaseException catch (e) {
-      print(e);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Erreur $e')));
     }
@@ -111,11 +110,8 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
           montant_logement_today = total_logement;
         });
 
-        print('Food : $montant_food_today');
-        print('Logement : $montant_logement_today');
       });
     } on FirebaseException catch (e) {
-      print(e);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Erreur $e')));
     }

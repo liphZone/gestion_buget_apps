@@ -33,18 +33,13 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
       final add_compte = Compte(
         jour: DateTime.now().day,
         mois: DateFormat.LLLL().format(DateTime.now()),
+        mois_int: DateTime.now().month,
         solde: double.parse(soldeController.text),
-        // logement: logement,
         montant_logement: double.parse(montantLogementController.text),
-        // alimentation: alimentation,
         montant_alimentation: double.parse(montantAlimentationController.text),
-        // habillement: habillement,
         montant_habillement: double.parse(montantHabillementController.text),
-        // deplacement: deplacement,
         montant_deplacement: double.parse(montantDeplacementController.text),
-        // education: education,
         montant_education: double.parse(montantEducationController.text),
-        // divers: divers,
         montant_divers: double.parse(montantDiversController.text),
         date_complete: DateTime.now(),
         date: DateFormat("dd MM yyyy").format(DateTime.now()),
@@ -52,18 +47,12 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
 
       final json = add_compte.createCompteToJson();
 
-      print('Solde : ${soldeController.text}');
-      print('Logement : ${montantLogementController.text}');
-      print('Food : ${montantAlimentationController.text}');
-
-
       // //creation du document et ecriture des datas
       await docCompte.set(json);
 
-        Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
-                              (route) => false);
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (route) => false);
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Vous avez enregistré une dépense journalière ')));
@@ -95,11 +84,7 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
       setState(() {
         data_global = documentSnapshot.exists;
       });
-
-      print('Data : $documentSnapshot');
-      print('Val : ${documentSnapshot.exists}');
     } on FirebaseException catch (e) {
-      print(e);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Erreur $e')));
     }

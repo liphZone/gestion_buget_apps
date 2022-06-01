@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gestion_buget_apps/screens/acceuil.dart';
 import 'package:gestion_buget_apps/screens/statistique.dart';
-import 'package:gestion_buget_apps/screens/stats/chart.dart';
+import 'package:gestion_buget_apps/screens/stats/chart_screen.dart';
 import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,11 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         data_global = documentSnapshot.exists;
       });
-
-      print('Data : $documentSnapshot');
-      print('Val : ${documentSnapshot.exists}');
     } on FirebaseException catch (e) {
-      print(e);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Erreur $e')));
     }
