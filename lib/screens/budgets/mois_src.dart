@@ -148,20 +148,46 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: Colors.amber,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
-              
                 children: [
                   Container(
                     margin: EdgeInsets.all(10),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(blurRadius: 1),
+                        ]),
+                    child: ListTile(
+                      title: Row(
+                        children: [
+                          Icon(Icons.money),
+                          Text('Solde'),
+                        ],
+                      ),
+                      subtitle: LinearProgressIndicator(
+                        color: Colors.blue,
+                        minHeight: 15,
+                        value: 1,
+                      ),
+                      trailing: Text('$total_solde_global F CFA'),
                     ),
+                  ),
+
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(blurRadius: 1),
+                        ]),
                     child: ListTile(
                       title: Row(
                         children: [
@@ -170,7 +196,7 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                         ],
                       ),
                       subtitle: LinearProgressIndicator(
-                        color: Colors.red,
+                        color: Colors.blue,
                         minHeight: 15,
                         value: percent_logement_global / 100,
                       ),
@@ -182,9 +208,11 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(blurRadius: 1),
+                        ]),
                     child: ListTile(
                       title: Row(
                         children: [
@@ -193,7 +221,7 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                         ],
                       ),
                       subtitle: LinearProgressIndicator(
-                        color: Colors.red,
+                        color: Colors.blue,
                         minHeight: 15,
                         value: percent_food_global / 100,
                       ),
@@ -205,18 +233,20 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(blurRadius: 1),
+                        ]),
                     child: ListTile(
                       title: Row(
                         children: [
-                          Icon(Icons.shopify_rounded),
+                          Icon(Icons.shopping_bag),
                           Text('Habillement'),
                         ],
                       ),
                       subtitle: LinearProgressIndicator(
-                        color: Colors.red,
+                        color: Colors.blue,
                         minHeight: 15,
                         value: percent_clothing_global / 100,
                       ),
@@ -228,9 +258,11 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(blurRadius: 1),
+                        ]),
                     child: ListTile(
                       title: Row(
                         children: [
@@ -239,7 +271,7 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                         ],
                       ),
                       subtitle: LinearProgressIndicator(
-                        color: Colors.red,
+                        color: Colors.blue,
                         minHeight: 15,
                         value: percent_deplacement_global / 100,
                       ),
@@ -251,9 +283,11 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(blurRadius: 1),
+                        ]),
                     child: ListTile(
                       title: Row(
                         children: [
@@ -262,7 +296,7 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                         ],
                       ),
                       subtitle: LinearProgressIndicator(
-                        color: Colors.red,
+                        color: Colors.blue,
                         minHeight: 15,
                         value: percent_education_global / 100,
                       ),
@@ -274,9 +308,11 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(blurRadius: 1),
+                        ]),
                     child: ListTile(
                       title: Row(
                         children: [
@@ -285,7 +321,7 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
                         ],
                       ),
                       subtitle: LinearProgressIndicator(
-                        color: Colors.red,
+                        color: Colors.blue,
                         minHeight: 15,
                         value: percent_divers_global / 100,
                       ),

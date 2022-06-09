@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gestion_buget_apps/screens/acceuil.dart';
-import 'package:gestion_buget_apps/screens/statistique.dart';
-import 'package:gestion_buget_apps/screens/stats/chart_screen.dart';
+import 'package:gestion_buget_apps/screens/acceuil_src.dart';
+import 'package:gestion_buget_apps/screens/stats/chart_src.dart';
 import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -52,13 +51,14 @@ class _HomeScreenState extends State<HomeScreen> {
         clipBehavior: Clip.antiAlias,
         shape: CircularNotchedRectangle(),
         child: BottomNavigationBar(
+          backgroundColor: Colors.white70,
           currentIndex: selectIndex,
           selectedItemColor: Colors.red,
           unselectedItemColor: Colors.black,
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: ''),
             BottomNavigationBarItem(icon: Icon(Icons.analytics), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.list), label: ''),
+            // BottomNavigationBarItem(icon: Icon(Icons.list), label: ''),
           ],
           onTap: (val) {
             setState(() {

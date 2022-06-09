@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:gestion_buget_apps/screens/acceuil.dart';
-import 'package:gestion_buget_apps/screens/budgets/mois.dart';
-import 'package:gestion_buget_apps/screens/budgets/today.dart';
-import 'package:gestion_buget_apps/screens/comptes/compte_form.dart';
-import 'package:gestion_buget_apps/screens/comptes/update_compte_form.dart';
+import 'package:gestion_buget_apps/screens/acceuil_src.dart';
+import 'package:gestion_buget_apps/screens/budgets/mois_src.dart';
+import 'package:gestion_buget_apps/screens/budgets/today_src.dart';
+import 'package:gestion_buget_apps/screens/comptes/compte_form_src.dart';
+import 'package:gestion_buget_apps/screens/comptes/update_compte_form_src.dart';
 import 'package:gestion_buget_apps/screens/home.dart';
-import 'package:gestion_buget_apps/screens/statistique.dart';
-import 'package:gestion_buget_apps/screens/stats/chart_screen.dart';
+import 'package:gestion_buget_apps/screens/stats/chart_src.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Gestion Budget',
       theme: ThemeData(
+     
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the

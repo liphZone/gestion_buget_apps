@@ -87,7 +87,8 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
     try {
       await FirebaseFirestore.instance
           .collection('comptes')
-          .where('date', isEqualTo: DateFormat("dd MM yyyy").format(DateTime.now()))
+          .where('date',
+              isEqualTo: DateFormat("dd MM yyyy").format(DateTime.now()))
           .get()
           .then((snapshot) {
         double total_logement = 0.0;
@@ -109,19 +110,20 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
           montant_food_today = total_alimentation;
           montant_logement_today = total_logement;
         });
-
       });
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Erreur $e')));
     }
   }
+
   @override
   void setState(fn) {
     if (mounted) {
       super.setState(fn);
     }
   }
+
   @override
   void initState() {
     readCompte();
@@ -132,7 +134,7 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
 
   @override
   void dispose() {
-   readCompte();
+    readCompte();
     todayMontant();
     super.dispose();
   }
@@ -156,13 +158,27 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                 setState(() {
                   mois1 = newValue!;
                   readCompte();
-
-                  print('Val: ${mois1}');
                 });
               },
             ),
             Text('Gestion Budget'),
-            IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+            // IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+            PopupMenuButton(
+              itemBuilder: (context) => [
+                PopupMenuItem(child: Column(
+                  children: [
+                    Icon(Icons.miscellaneous_services),
+                    Text('Parametre'),
+                  ],
+                ), value: 'Poster'),
+                PopupMenuItem(child: Text('Aide'), value: 'Poster'),
+              ],
+              onSelected: (val) {
+                if (val == 'Poster') {
+                  //
+                }
+              },
+            )
           ],
         ),
       ),
@@ -178,9 +194,13 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.2,
                   decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 1,
+                        )
+                      ]),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -216,9 +236,13 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                           child: Container(
                         height: double.infinity,
                         decoration: BoxDecoration(
-                          color: Colors.yellowAccent,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                            color: Colors.yellowAccent,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 1,
+                              )
+                            ]),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -249,9 +273,13 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                           width: MediaQuery.of(context).size.width * 0.5,
                           height: double.infinity,
                           decoration: BoxDecoration(
-                            color: Colors.redAccent,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                              color: Colors.redAccent,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 1,
+                                )
+                              ]),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -291,7 +319,7 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
-                        boxShadow: [BoxShadow(blurRadius: 0)]),
+                        boxShadow: [BoxShadow(blurRadius: 4)]),
                     child: Column(
                       children: [
                         Container(
@@ -299,7 +327,7 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                           height: MediaQuery.of(context).size.height * 0.1,
                           child: Center(
                               child: Text(
-                                  "Aujourd'hui ${DateTime.now().day} ${DateFormat.LLLL().format(DateTime.now())}")),
+                                  "Aujourd'hui ${DateFormat("dd-MM-yyyy").format(DateTime.now())}")),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width,
@@ -349,7 +377,7 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: [BoxShadow(spreadRadius: 0)]),
+                        boxShadow: [BoxShadow(blurRadius: 4)]),
                     child: Column(
                       children: [
                         Container(

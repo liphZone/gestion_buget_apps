@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gestion_buget_apps/models/chart.dart';
+import 'package:gestion_buget_apps/models/chart_mdl.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class ChartScreen extends StatefulWidget {
@@ -90,6 +90,13 @@ class _ChartScreenState extends State<ChartScreen> {
   }
 
   @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   void initState() {
     monthData();
     super.initState();
@@ -119,7 +126,7 @@ class _ChartScreenState extends State<ChartScreen> {
         colorFn: (Chart chart, _) => chart.color,
         id: 'Solde mensuel',
         data: data,
-        labelAccessorFn: (Chart chart, _) => '${chart.solde}: ${chart.mois} ',
+        labelAccessorFn: (Chart chart, _) => '${chart.solde}',
       ),
     ];
 
@@ -127,9 +134,8 @@ class _ChartScreenState extends State<ChartScreen> {
       series,
       vertical: true,
       barRendererDecorator: charts.BarLabelDecorator(),
-    animationDuration: Duration(seconds: 1),
+      animationDuration: Duration(seconds: 1),
     );
-
 
     return Scaffold(
       body: SafeArea(
@@ -143,22 +149,21 @@ class _ChartScreenState extends State<ChartScreen> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.1,
                     decoration: BoxDecoration(
-                      color: Colors.amber,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Text('OK'),
+                    child: Center(
+                        child: Text(
+                      'Graphe des dépenses mensuelles',
+                      style: TextStyle(fontSize: 20),
+                    )),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.7,
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
                     child: chart,
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
                   ),
                 ],
               ),
