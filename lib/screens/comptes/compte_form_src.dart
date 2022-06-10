@@ -95,6 +95,11 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
     compteIdCheck();
     super.initState();
   }
+  @override
+  void dispose() {
+    compteIdCheck();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +107,6 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        // backgroundColor: width < 600 ? Colors.red : Colors.green,
         body: SafeArea(
       child: SingleChildScrollView(
         child: Container(

@@ -43,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       body: screens.elementAt(selectIndex),
       bottomNavigationBar: BottomAppBar(
@@ -67,14 +68,15 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+     
+      floatingActionButton:  selectIndex == 0 ? FloatingActionButton(
         onPressed: () {
           data_global == false
               ? Navigator.pushNamed(context, 'compte_form')
               : Navigator.pushNamed(context, 'compte_update');
         },
         child: data_global == false ? Icon(Icons.add) : Icon(Icons.edit),
-      ),
+      ) : SizedBox(),
     );
   }
 }

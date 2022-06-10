@@ -118,7 +118,22 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
   }
 
   @override
+  void dispose() {
+    readMonthOutlay();
+    super.dispose();
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
           title: Row(
@@ -153,181 +168,272 @@ class _MonthOutlayScreenState extends State<MonthOutlayScreen> {
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.all(10),
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(blurRadius: 1),
-                        ]),
-                    child: ListTile(
-                      title: Row(
+                      margin: EdgeInsets.all(5),
+                      height: height * 0.1,
+                      width: width,
+                      decoration:
+                          BoxDecoration(color: Colors.white, boxShadow: [
+                        BoxShadow(blurRadius: 1),
+                      ]),
+                      child: Stack(
                         children: [
-                          Icon(Icons.money),
-                          Text('Solde'),
+                          Container(
+                            margin: EdgeInsets.all(2),
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: LinearProgressIndicator(
+                              value: total_solde_global == 0 ? 0 : 1,
+                              color: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                          Align(
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Icon(Icons.money),
+                                  Text('Solde'),
+                                  Text('$total_solde_global F CFA'),
+                                  Text(total_solde_global == 0
+                                      ? '0 %'
+                                      : '100 %'),
+                                ],
+                              ),
+                            ),
+                            alignment: Alignment.topCenter,
+                          ),
                         ],
-                      ),
-                      subtitle: LinearProgressIndicator(
-                        color: Colors.blue,
-                        minHeight: 15,
-                        value: 1,
-                      ),
-                      trailing: Text('$total_solde_global F CFA'),
-                    ),
-                  ),
-
+                      )),
                   Container(
-                    margin: EdgeInsets.all(10),
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(blurRadius: 1),
-                        ]),
-                    child: ListTile(
-                      title: Row(
+                      margin: EdgeInsets.all(5),
+                      height: height * 0.1,
+                      width: width,
+                      decoration:
+                          BoxDecoration(color: Colors.white, boxShadow: [
+                        BoxShadow(blurRadius: 1),
+                      ]),
+                      child: Stack(
                         children: [
-                          Icon(Icons.house_outlined),
-                          Text('Logement'),
+                          Container(
+                            margin: EdgeInsets.all(2),
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: LinearProgressIndicator(
+                              value: percent_logement_global / 100,
+                              color: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                          Align(
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Icon(Icons.house_outlined),
+                                  Text('Logement'),
+                                  Text('$total_logement_global F CFA'),
+                                  Text(
+                                      '${percent_logement_global.roundToDouble()} %'),
+                                ],
+                              ),
+                            ),
+                            alignment: Alignment.topCenter,
+                          ),
                         ],
-                      ),
-                      subtitle: LinearProgressIndicator(
-                        color: Colors.blue,
-                        minHeight: 15,
-                        value: percent_logement_global / 100,
-                      ),
-                      trailing: Text('$total_logement_global F CFA'),
-                    ),
-                  ),
+                      )),
                   Container(
-                    margin: EdgeInsets.all(10),
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(blurRadius: 1),
-                        ]),
-                    child: ListTile(
-                      title: Row(
+                      margin: EdgeInsets.all(5),
+                      height: height * 0.1,
+                      width: width,
+                      decoration:
+                          BoxDecoration(color: Colors.white, boxShadow: [
+                        BoxShadow(blurRadius: 1),
+                      ]),
+                      child: Stack(
                         children: [
-                          Icon(Icons.restaurant_menu_rounded),
-                          Text('Nourriture'),
+                          Container(
+                            margin: EdgeInsets.all(2),
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: LinearProgressIndicator(
+                              value: percent_food_global / 100,
+                              color: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                          Align(
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Icon(Icons.restaurant_menu_rounded),
+                                  Text('Nourriture'),
+                                  Text('$total_food_global F CFA'),
+                                  Text(
+                                      '${percent_food_global.roundToDouble()} %'),
+                                ],
+                              ),
+                            ),
+                            alignment: Alignment.topCenter,
+                          ),
                         ],
-                      ),
-                      subtitle: LinearProgressIndicator(
-                        color: Colors.blue,
-                        minHeight: 15,
-                        value: percent_food_global / 100,
-                      ),
-                      trailing: Text('$total_food_global F CFA'),
-                    ),
-                  ),
+                      )),
                   Container(
-                    margin: EdgeInsets.all(10),
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(blurRadius: 1),
-                        ]),
-                    child: ListTile(
-                      title: Row(
+                      margin: EdgeInsets.all(5),
+                      height: height * 0.1,
+                      width: width,
+                      decoration:
+                          BoxDecoration(color: Colors.white, boxShadow: [
+                        BoxShadow(blurRadius: 1),
+                      ]),
+                      child: Stack(
                         children: [
-                          Icon(Icons.shopping_bag),
-                          Text('Habillement'),
+                          Container(
+                            margin: EdgeInsets.all(2),
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: LinearProgressIndicator(
+                              value: percent_clothing_global / 100,
+                              color: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                          Align(
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Icon(Icons.shopping_bag),
+                                  Text('Habillement'),
+                                  Text('$total_clothing_global F CFA'),
+                                  Text(
+                                      '${percent_clothing_global.roundToDouble()} %'),
+                                ],
+                              ),
+                            ),
+                            alignment: Alignment.topCenter,
+                          ),
                         ],
-                      ),
-                      subtitle: LinearProgressIndicator(
-                        color: Colors.blue,
-                        minHeight: 15,
-                        value: percent_clothing_global / 100,
-                      ),
-                      trailing: Text('$total_clothing_global F CFA'),
-                    ),
-                  ),
+                      )),
                   Container(
-                    margin: EdgeInsets.all(10),
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(blurRadius: 1),
-                        ]),
-                    child: ListTile(
-                      title: Row(
+                      margin: EdgeInsets.all(5),
+                      height: height * 0.1,
+                      width: width,
+                      decoration:
+                          BoxDecoration(color: Colors.white, boxShadow: [
+                        BoxShadow(blurRadius: 1),
+                      ]),
+                      child: Stack(
                         children: [
-                          Icon(Icons.drive_eta),
-                          Text('Deplacement'),
+                          Container(
+                            margin: EdgeInsets.all(2),
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: LinearProgressIndicator(
+                              value: percent_deplacement_global / 100,
+                              color: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                          Align(
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Icon(Icons.drive_eta),
+                                  Text('Deplacement'),
+                                  Text('$total_deplacement_global F CFA'),
+                                  Text(
+                                      '${percent_deplacement_global.roundToDouble()} %'),
+                                ],
+                              ),
+                            ),
+                            alignment: Alignment.topCenter,
+                          ),
                         ],
-                      ),
-                      subtitle: LinearProgressIndicator(
-                        color: Colors.blue,
-                        minHeight: 15,
-                        value: percent_deplacement_global / 100,
-                      ),
-                      trailing: Text('$total_deplacement_global F CFA'),
-                    ),
-                  ),
+                      )),
                   Container(
-                    margin: EdgeInsets.all(10),
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(blurRadius: 1),
-                        ]),
-                    child: ListTile(
-                      title: Row(
+                      margin: EdgeInsets.all(5),
+                      height: height * 0.1,
+                      width: width,
+                      decoration:
+                          BoxDecoration(color: Colors.white, boxShadow: [
+                        BoxShadow(blurRadius: 1),
+                      ]),
+                      child: Stack(
                         children: [
-                          Icon(Icons.school),
-                          Text('Education'),
+                          Container(
+                            margin: EdgeInsets.all(2),
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: LinearProgressIndicator(
+                              value: percent_education_global / 100,
+                              color: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                          Align(
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Icon(Icons.school),
+                                  Text('Education'),
+                                  Text('$total_education_global F CFA'),
+                                  Text(
+                                      '${percent_education_global.roundToDouble()} %'),
+                                ],
+                              ),
+                            ),
+                            alignment: Alignment.topCenter,
+                          ),
                         ],
-                      ),
-                      subtitle: LinearProgressIndicator(
-                        color: Colors.blue,
-                        minHeight: 15,
-                        value: percent_education_global / 100,
-                      ),
-                      trailing: Text('$total_education_global F CFA'),
-                    ),
-                  ),
+                      )),
                   Container(
-                    margin: EdgeInsets.all(10),
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(blurRadius: 1),
-                        ]),
-                    child: ListTile(
-                      title: Row(
+                      margin: EdgeInsets.all(5),
+                      height: height * 0.1,
+                      width: MediaQuery.of(context).size.width,
+                      decoration:
+                          BoxDecoration(color: Colors.white, boxShadow: [
+                        BoxShadow(blurRadius: 1),
+                      ]),
+                      child: Stack(
                         children: [
-                          Icon(Icons.miscellaneous_services),
-                          Text('Divers'),
+                          Container(
+                            margin: EdgeInsets.all(2),
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: LinearProgressIndicator(
+                              value: percent_divers_global / 100,
+                              color: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                          Align(
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Icon(Icons.miscellaneous_services),
+                                  Text('Divers'),
+                                  Text('$total_divers_global F CFA'),
+                                  Text(
+                                      '${percent_divers_global.roundToDouble()} %'),
+                                ],
+                              ),
+                            ),
+                            alignment: Alignment.topCenter,
+                          ),
                         ],
-                      ),
-                      subtitle: LinearProgressIndicator(
-                        color: Colors.blue,
-                        minHeight: 15,
-                        value: percent_divers_global / 100,
-                      ),
-                      trailing: Text('$total_divers_global F CFA'),
-                    ),
-                  ),
+                      )),
                 ],
               )),
         )));

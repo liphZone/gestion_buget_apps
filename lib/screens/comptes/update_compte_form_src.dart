@@ -59,7 +59,6 @@ class _CompteUpdateScreenState extends State<CompteUpdateScreen> {
         });
       });
     } on FirebaseException catch (e) {
-      print(e);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Erreur $e')));
     }
@@ -91,7 +90,6 @@ class _CompteUpdateScreenState extends State<CompteUpdateScreen> {
           content: Text(
               'Vous avez effectuée une mise à jour de la dépense journalière ')));
     } on FirebaseException catch (e) {
-      print('Erreur : $e');
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Erreur $e')));
     }
@@ -100,8 +98,13 @@ class _CompteUpdateScreenState extends State<CompteUpdateScreen> {
   @override
   void initState() {
     todayData();
-
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    todayData();
+    super.dispose();
   }
 
   @override

@@ -128,7 +128,6 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
   void initState() {
     readCompte();
     todayMontant();
-
     super.initState();
   }
 

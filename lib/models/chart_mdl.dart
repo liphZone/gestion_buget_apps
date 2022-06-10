@@ -6,7 +6,7 @@ class Chart {
   final String mois;
   final charts.Color color;
 
-  Chart(this.solde, this.mois ,Color color)
+  Chart(this.solde, this.mois, Color color)
       : this.color = charts.Color(
             g: color.green, r: color.red, a: color.alpha, b: color.blue);
 }

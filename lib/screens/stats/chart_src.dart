@@ -103,6 +103,12 @@ class _ChartScreenState extends State<ChartScreen> {
   }
 
   @override
+  void dispose() {
+    monthData();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var data = [
       Chart(janv_solde_global.toInt(), 'Janv', Colors.amber),
