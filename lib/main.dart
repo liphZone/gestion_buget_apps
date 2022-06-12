@@ -6,6 +6,7 @@ import 'package:gestion_buget_apps/screens/budgets/mois_src.dart';
 import 'package:gestion_buget_apps/screens/budgets/today_src.dart';
 import 'package:gestion_buget_apps/screens/comptes/compte_form_src.dart';
 import 'package:gestion_buget_apps/screens/comptes/update_compte_form_src.dart';
+import 'package:gestion_buget_apps/screens/help_src.dart';
 import 'package:gestion_buget_apps/screens/home.dart';
 import 'package:gestion_buget_apps/screens/stats/chart_src.dart';
 
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         'today_depense' : (context) => const TodayOutlayScreen(),
         'month_depense' : (context) => const MonthOutlayScreen(),
         'stat_screen'   : (context) =>  const ChartScreen(),
+        'help_screen'   : (context) =>  const HelpScreen(),
       },
     );
   }

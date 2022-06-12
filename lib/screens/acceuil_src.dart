@@ -164,17 +164,19 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
             // IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
             PopupMenuButton(
               itemBuilder: (context) => [
-                PopupMenuItem(child: Column(
-                  children: [
-                    Icon(Icons.miscellaneous_services),
-                    Text('Parametre'),
-                  ],
-                ), value: 'Poster'),
+                PopupMenuItem(
+                    child: Column(
+                      children: [
+                        Icon(Icons.miscellaneous_services),
+                        Text('Parametre'),
+                      ],
+                    ),
+                    value: 'Poster'),
                 PopupMenuItem(child: Text('Aide'), value: 'Poster'),
               ],
               onSelected: (val) {
                 if (val == 'Poster') {
-                  //
+                  Navigator.pushNamed(context, 'help_screen');
                 }
               },
             )

@@ -117,8 +117,9 @@ class _TodayOutlayScreenState extends State<TodayOutlayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
+    final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
         body: SafeArea(
